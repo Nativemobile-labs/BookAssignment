@@ -24,7 +24,7 @@ const SplashScreen = ({ navigation }: any) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.booksTitle}>Readable</Text>
       <Text style={styles.subTitle}>Time to reading....</Text>
-      {isLoading && <ActivityIndicator size={'large'} color={'silver'} style={styles.loading} />}
+      {isLoading && <ActivityIndicator size={'large'} color={'red'} style={styles.loading} />}
     </SafeAreaView>
   );
 };

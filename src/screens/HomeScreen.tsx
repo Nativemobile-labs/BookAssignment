@@ -30,24 +30,25 @@ const HomeScreen = ({ navigation }: any) => {
   useEffect(() => {
     if (bookList) {
       setbookLists(bookList);
-      setLoading(false);
+      // setLoading(false);
     }
   }, [bookList]);
 
-  // fetch book data api
   useEffect(() => {
     const fetchBook = async () => {
       try {
         const response = await axios.get(baseUrl);
+        setLoading(true);
         dispatch(setBookList(response.data.works));
+        setLoading(false); // Move setLoading(false) here
       } catch (error) {
         console.log('Error', 'Failed to fetch books. Please try again later.');
-      } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false if an error occurs
       }
     };
     fetchBook();
   }, []);
+
 
   // store data in redux and navigate to book details
   const goToDetailsScreen = (item: Book) => {
@@ -59,14 +60,15 @@ const HomeScreen = ({ navigation }: any) => {
   const searchBooks = async (query: string) => {
     try {
       const response = await axios.get(`${searchUrl}?title=${query}`);
-      setbookLists(response.data.docs);
+      setbookLists(response?.data?.docs);
     } catch (error) {
       ('Error', 'Failed to search for books. Please try again later.');
     }
   };
 
   // render book list item
-  const renderItem = ({ item }: { item: Book }) => {
+  const renderItem = ({ item }: { item: Book | any }) => {
+    // console.log('-------------------------',item)
     if (searchQuery && !item.title.toLowerCase().includes(searchQuery.toLowerCase())) {
       return null;
     }
@@ -78,9 +80,12 @@ const HomeScreen = ({ navigation }: any) => {
           resizeMode="cover"
         />
         <View style={styles.cardContent}>
-          <Text style={styles.title}>{item?.title}</Text>
-          <Text style={styles.author}>By {item.authors[0]?.name}</Text>
-          <Text style={styles.year}>Year: {item.first_publish_year}</Text>
+        
+          {item ?  <Text style={styles.title}>{item?.title}</Text>: ''}
+          {item && item.authors && item.authors.length > 0 && (
+  <Text style={styles.author}>By {item.authors[0].name}</Text>
+)}
+         {item ? <Text style={styles.year}>Year: {item?.first_publish_year}</Text>: ''}
 
           {/* Favorite Button */}
           <TouchableOpacity style={styles.likeButton} onPress={() => dispatch(toggleFavorite(item.key))}>
@@ -96,15 +101,16 @@ const HomeScreen = ({ navigation }: any) => {
   // render activity indicator while loading
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="orange" />
+      <View style={[styles.loadingContainer, {backgroundColor: 'black'}]}>
+        <ActivityIndicator size="large" color="red" />
       </View>
     );
   }
-
+console.log("loadingloading",loading)
   // render main component
   return (
     <SafeAreaView style={styles.container}>
+      <>
       <TextInput
         style={styles.searchInput}
         placeholder="Search by Title..."
@@ -115,9 +121,14 @@ const HomeScreen = ({ navigation }: any) => {
         }}
         value={searchQuery}
       />
+      {searchQuery.length > 0 ? (<TouchableOpacity style={{position: 'absolute', right: 40, top: 18}} onPress={()=> setSearchQuery('')}>
+        <Image source={require('../assets/multiply.png')} style={{height: 25, width: 25}}/>
+      </TouchableOpacity>) : null}
+      </>
       {/* {bookLists.map(a => console.log('==========',a.title, searchQuery))} */}
       
-      {bookList.some((res) => res.title.includes(searchQuery)) ? 
+
+      { !loading && bookList.some((res: { title: string | string[]; }) => res.title.includes(searchQuery)) ? 
       (
       <>
       <FlatList

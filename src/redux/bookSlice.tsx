@@ -12,7 +12,7 @@ interface Book {
 
 interface BookState {
   bookList: Book[];
-  bookData: Book | null;ß 
+  bookData: Book | null;
   booksAdded: Book[];
 }
 
