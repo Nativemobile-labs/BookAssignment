@@ -19,10 +19,46 @@ const App = () => {
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Main'>
-        <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}}/>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Cart" component={CartScreen} />
+        <Stack.Screen name="Main" component={MainScreen} 
+            options={{headerShown: false, headerStyle: {
+              backgroundColor: 'blue', // Change this to the desired color
+            }}}/>
+        <Stack.Screen name="Home" component={HomeScreen} 
+           options={{
+            title: 'Home',
+            headerStyle: {
+              backgroundColor: '#191919', // Change this to the desired color
+            },
+            headerTintColor: 'red', // Change text color
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+          />
+        <Stack.Screen name="Details" component={DetailsScreen} 
+          options={{
+            title: 'Details',
+            headerStyle: {
+              backgroundColor: '#191919', // Change this to the desired color
+            },
+            headerTintColor: 'red', // Change text color
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen name="Favourite" component={CartScreen}
+        options={{
+          title: 'Favourites',
+          headerStyle: {
+            backgroundColor: '#191919', // Change this to the desired color
+          },
+          headerTintColor: 'red', // Change text color
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

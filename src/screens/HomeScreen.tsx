@@ -9,7 +9,6 @@ import {
   TouchableOpacity, 
   Image, 
   TextInput, 
-  Alert, 
   ActivityIndicator
  } from 'react-native';
 import axios from 'axios';
@@ -62,7 +61,7 @@ const HomeScreen = ({ navigation }: any) => {
       const response = await axios.get(`${searchUrl}?title=${query}`);
       setbookLists(response.data.docs);
     } catch (error) {
-      Alert.alert('Error', 'Failed to search for books. Please try again later.');
+      ('Error', 'Failed to search for books. Please try again later.');
     }
   };
 
@@ -81,14 +80,14 @@ const HomeScreen = ({ navigation }: any) => {
         <View style={styles.cardContent}>
           <Text style={styles.title}>{item?.title}</Text>
           <Text style={styles.author}>By {item.authors[0]?.name}</Text>
-          <Text style={styles.year}>Year: {item?.first_publish_year}</Text>
+          <Text style={styles.year}>Year: {item.first_publish_year}</Text>
 
           {/* Favorite Button */}
           <TouchableOpacity style={styles.likeButton} onPress={() => dispatch(toggleFavorite(item.key))}>
             <Image source={item.favorite ? require('../assets/heartRed.png') : require('../assets/heart.png')} style={styles.like} />
           </TouchableOpacity>
 
-          <Text style={styles.more}>More....</Text>
+          <Text style={styles.more}>Read more....</Text>
         </View>
       </TouchableOpacity>
     );
@@ -116,6 +115,11 @@ const HomeScreen = ({ navigation }: any) => {
         }}
         value={searchQuery}
       />
+      {/* {bookLists.map(a => console.log('==========',a.title, searchQuery))} */}
+      
+      {bookList.some((res) => res.title.includes(searchQuery)) ? 
+      (
+      <>
       <FlatList
         data={bookLists}
         renderItem={renderItem}
@@ -123,9 +127,16 @@ const HomeScreen = ({ navigation }: any) => {
         style={styles.flatList}
         showsVerticalScrollIndicator={false}
       />
-      <TouchableOpacity style={styles.cartButton} onPress={() => navigation.navigate('Cart')}>
-        <Text style={styles.cartText}>Cart</Text>
+      <TouchableOpacity style={styles.cartButton} onPress={() => navigation.navigate('Favourite')}>
+        <Image source={require('../assets/heart.png')} style={{height: 30, width: 30, alignSelf: 'center', tintColor: 'white'}}/>
       </TouchableOpacity>
+      </>
+      )
+      :
+      (<View style={{flex: 1, alignItems: 'center'}}>
+        <Text style={{color: '#fff'}}>No Results found..</Text>
+      </View>)
+    }
     </SafeAreaView>
   );
 };
@@ -208,9 +219,9 @@ const styles = StyleSheet.create({
   },
   cartButton: {
     backgroundColor: 'red',
-    height: 50, 
-    width: 70,
-    borderRadius: 20,
+    height: 60, 
+    width: 60,
+    borderRadius: 30,
     position: 'absolute',
     bottom: 15, 
     right: 20, 

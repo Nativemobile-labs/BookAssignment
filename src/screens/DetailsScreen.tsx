@@ -37,9 +37,9 @@ const DetailsScreen = () => {
           <Text style={styles.title}>{bookData.title}</Text>
           <Text style={styles.author}>By {bookData.authors[0].name}</Text>
           <Text style={styles.year}>Year: {bookData.first_publish_year}</Text>
-          <Text style={[styles.genre, {color: 'orange', fontSize: 18}]}>Genre: </Text>
+          <Text style={[styles.genre, {marginTop:5, color: 'red', fontSize: 18, textAlign:'justify'}]}>Genre: </Text>
           <Text style={styles.genre}>{bookData.subject}</Text>
-          <Text style={[styles.description, {color:'orange', fontSize: 18}]}>Description: </Text>
+          <Text style={[styles.description, {marginTop:10,color:'red', fontSize: 18,fontWeight:'300',}]}>Description: </Text>
           <Text style={styles.description}>{bookData.title} is a fascinating book that...</Text>
         </View>
       </ScrollView>
@@ -62,35 +62,44 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 10,
   },
-  detailsContainer: {},
+  detailsContainer: {
+},
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'white',
+    marginBottom: 5,
+    color: '#fff',
   },
   author: {
-    fontSize: 18,
+    fontSize: 15,
     marginBottom: 5,
-    color: 'white',
+    color: '#fff',
   },
   year: {
-    fontSize: 16,
-    marginBottom: 5,
-    color: 'white',
+    fontSize: 15,
+    marginBottom: 0,
+    color: '#fff',
   },
   genre: {
-    fontSize: 16,
-    marginBottom: 5,
-    color: 'white',
+    fontSize: 14,
+    marginBottom: 1,
+    color: '#fff',
+    letterSpacing:0.7,
+    lineHeight:22,
+    textAlign:'auto',
+    fontWeight:'300',
   },
   description: {
-    fontSize: 16,
-    marginBottom: 5,
-    color: 'white',
+    fontSize: 14,
+    marginTop: 2,
+    color: '#fff',
+    letterSpacing:0.7,
+    lineHeight:22,
+    textAlign:'auto',
+    fontWeight:'300',
   },
   noDataText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 16,
     textAlign: 'center',
   },

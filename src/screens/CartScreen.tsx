@@ -21,9 +21,9 @@ const CartScreen = () => {
                     <Text style={styles.author}>By {item.authors[0]?.name}</Text>
                     <Text style={styles.year}>Year: {item?.first_publish_year}</Text>
                     <TouchableOpacity style={styles.likeButton} onPress={() => dispatch(toggleRemoveFavorite(item.key))}>
-                        <Image source={item.favorite ? require('../assets/heartRed.png') : require('../assets/heart.png')} style={styles.like} />
+                        <Text style={{color: '#fff',fontWeight:'bold',letterSpacing:0.2,}}>Remove from here</Text>                    
                     </TouchableOpacity>
-                    <Text style={styles.more}>More....</Text>
+                    {/* <Text style={styles.more}>Read more....</Text> */}
                 </View>
             </View>
         )
@@ -33,7 +33,7 @@ const CartScreen = () => {
         <SafeAreaView style={styles.container}>
             {booksAdded.length === 0 ? (
                 <View style={styles.emptyView}>
-                    <Text style={styles.emptyText}>No Books Added in Favorites</Text>
+                    <Text style={styles.emptyText}>No Books to Show</Text>
                 </View>
             ) : (
                 <FlatList
@@ -97,8 +97,11 @@ const styles = StyleSheet.create({
     },
     likeButton: {
         alignSelf: 'flex-start',
-        marginTop: 15
-    },
+        marginTop: 40,
+        backgroundColor:'gray',
+        padding:10,
+        borderRadius:5,
+},
     like: {
         height: 25,
         width: 25,
@@ -112,16 +115,13 @@ const styles = StyleSheet.create({
         height: 50,
         width: '100%',
         alignSelf: 'center',
-        borderWidth: 1,
-        borderColor: 'white',
         borderRadius: 5,
         marginTop: 10,
         alignItems: 'center',
         justifyContent: 'center',
     },
     emptyText: {
-        color: 'white',
-        fontWeight: 'bold',
+        color: '#dfdfdf',
     },
     flatList: {
         width: '100%',

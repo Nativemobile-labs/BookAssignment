@@ -22,7 +22,7 @@ const SplashScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.booksTitle}>Book 's</Text>
+      <Text style={styles.booksTitle}>Readable</Text>
       <Text style={styles.subTitle}>Time to reading....</Text>
       {isLoading && <ActivityIndicator size={'large'} color={'silver'} style={styles.loading} />}
     </SafeAreaView>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   booksTitle: {
     fontSize: 40,
     fontWeight: 'bold',
-    fontStyle: 'italic', // Change font style to italic
+    fontStyle: 'italic',
     color: 'red',
     marginBottom: 20,
   },
